@@ -23,8 +23,8 @@ json-server --watch db.json
   }
   
   getFavorites(): Observable<{ id: number }[]> {
-  return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
-    .pipe(tap(res => this.store.set('favorites', res)));
+    return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
+      .pipe(tap(res => this.store.set('favorites', res)));
   }
   
   addFavorite(id: number): Observable<any> {
@@ -51,8 +51,8 @@ json-server --watch db.json
   constructor(private service: AppService, private store: Store) { }
 
   ngOnInit() {
-    this.appService.getFavorites().pipe(take(1)).subscribe();
-    this.appService.getMovies().pipe(take(1)).subscribe();
+    this.service.getFavorites().pipe(take(1)).subscribe();
+    this.service.getMovies().pipe(take(1)).subscribe();
 
     this.movies$ = this.store.select<Movie[]>('movies');
     this.favorites$ = this.store.select<{ id }[]>('favorites');
