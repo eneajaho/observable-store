@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Auth } from '../../models/Auth';
+import { Auth } from '../models/Auth';
 
 @Component({
   selector: 'app-navigation',
@@ -14,9 +14,6 @@ import { Auth } from '../../models/Auth';
           <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/movies">Movies</a>
           </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/favorites">Favorites</a>
-          </li>
         </ul>
         <ul class="ml-auto navbar-nav">
           <li class="nav-item active" *ngIf="auth">
@@ -25,7 +22,6 @@ import { Auth } from '../../models/Auth';
         </ul>
       </div>
     </nav>
-
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,0 +1,28 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Iron Man",
+      "description": "Iron Man is a 2008 American superhero film based on the Marvel Comics character of the same name. Produced by Marvel Studios and distributed by Paramount Pictures, it is the first film in the Marvel Cinematic Universe.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Iron_Man_poster.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Avengers",
+      "description": "Nick Fury is compelled to launch the Avengers Initiative when Loki poses a threat to planet Earth. His squad of superheroes put their minds together to accomplish the task.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg"
+    }
+  ],
+  "favorites": [
+    {
+      "id": 2
+    },
+    {
+      "id": 1
+    }
+  ],
+  "auth": {
+    "user": "Enea",
+    "token": "Hello World!"
+  }
+}

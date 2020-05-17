@@ -1,16 +1,19 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Movie } from '../../models/Movie';
+import { Movie } from '../models/Movie';
 
 @Component({
   selector: 'app-movie-card',
   template: `
-    <div class="card">
-      <img [src]="movie.image" class="card-img-top" [alt]="movie.title">
+    <div class="card shadow border-0">
+      <img [src]="movie.image" [routerLink]="['/movies/', movie.id]" class="card-img-top cp" [alt]="movie.title">
       <div class="card-body">
         <h3>{{ movie.title }}</h3>
         <p>{{ movie.description }}</p>
         <button *ngIf="!movie.isFavorite" class="btn btn-primary" (click)="add()">
           Add to favorites
+        </button>
+        <button *ngIf="movie.isFavorite" class="btn btn-danger" (click)="remove()">
+          Remove from favorites
         </button>
       </div>
     </div>
@@ -28,4 +31,7 @@ export class MovieCardComponent {
     this.added.emit(this.movie.id);
   }
 
+  remove() {
+    this.removed.emit(this.movie.id);
+  }
 }

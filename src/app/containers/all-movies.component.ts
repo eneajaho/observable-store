@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AppService } from '../../services/movie.service';
-import { Store } from '../../store/Store';
+import { AppService } from '../services/app.service';
+import { Store } from '../store/Store';
 import { combineLatest, Observable } from 'rxjs';
-import { Movie } from '../../models/Movie';
-import { map, take } from 'rxjs/operators';
+import { Movie } from '../models/Movie';
+import { map, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-movies',
@@ -13,7 +13,8 @@ import { map, take } from 'rxjs/operators';
            class="col-xs-12 col-sm-6 col-md-4">
         <app-movie-card
           [movie]="movie"
-          (added)="handleAdd($event)">
+          (added)="handleAdd($event)"
+          (removed)="handleRemove($event)">
         </app-movie-card>
       </div>
     </div>
@@ -47,5 +48,9 @@ export class AllMoviesComponent implements OnInit {
 
   handleAdd(id: number) {
     this.appService.addFavorite(id).pipe(take(1)).subscribe();
+  }
+
+  handleRemove(id: number) {
+    this.appService.removeFavorite(id).pipe(take(1)).subscribe();
   }
 }
