@@ -1,27 +1,60 @@
-# MoviesStore
+# Run Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
+Start Angular app
+```bash
+ng s -o
+```
 
-## Development server
+Start json-server
+```bash
+json-server --watch db.json
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Observable Store
 
-## Code scaffolding
+### Set data in services or components
+```js
+  // service example
+  constructor(private http: HttpClient, private store: Store) { }
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  getMovies(): Observable<Movie[]> {
+    return this.http.get<Movie[]>(`${this.api}/movies`)
+      .pipe(tap(data => this.store.set('movies', data)));
+  }
+  
+  getFavorites(): Observable<{ id: number }[]> {
+    return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
+      .pipe(tap(res => this.store.set('favorites', res)));
+  }
+  
+  addFavorite(id: number): Observable<any> {
+    return this.http.post(`${this.api}/favorites`, { id })
+     .pipe(tap(() => {
+      const currentFav = this.store.get('favorites');
+        this.store.set('favorites', [ ...currentFav, { id } ]);
+      }));
+  }
 
-## Build
+  removeFavorite(id: number): Observable<any> {
+    return this.http.delete(`${this.api}/favorites/${id}`)
+      .pipe(tap(() => {
+        const currentFav = this.store.get('favorites');
+        const newFav = currentFav.filter(fav => fav.id !== id);
+        this.store.set('favorites', newFav);
+      }));
+  }
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Reading data in components
+```js
 
-## Running unit tests
+  constructor(private service: AppService, private store: Store) { }
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  ngOnInit() {
+    this.service.getFavorites().pipe(take(1)).subscribe();
+    this.service.getMovies().pipe(take(1)).subscribe();
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+    this.movies$ = this.store.select<Movie[]>('movies');
+    this.favorites$ = this.store.select<{ id }[]>('favorites');
+  }
+```
