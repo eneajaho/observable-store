@@ -34,8 +34,8 @@ import { map, take, tap, filter } from 'rxjs/operators';
 })
 export class AllMoviesComponent implements OnInit {
 
-  movies$: Observable<Movie[]>;
-  favorites$: Observable<number[]>;
+  private movies$: Observable<Movie[]>;
+  private favorites$: Observable<number[]>;
 
   moviesList$: Observable<Movie[]>;
   favoritesList$: Observable<Movie[]>;
