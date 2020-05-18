@@ -18,6 +18,13 @@ import { Movie } from '../models/Movie';
       </div>
     </div>
   `,
+  styles: [`    
+    .card-body {
+      position: absolute;
+      bottom: 0;
+      background: #ffffff;
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieCardComponent {

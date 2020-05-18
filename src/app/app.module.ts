@@ -11,6 +11,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { MovieComponent } from './containers/movie.component';
 import { MovieResolver } from './resolvers/MovieResolver';
 import { MovieGuard } from './guards/movie.guard';
+import { FavoritesComponent } from './components/favorites.component';
 
 const routes: Route[] = [
   {
@@ -20,13 +21,13 @@ const routes: Route[] = [
       },
       {
         path: 'movies',
-        canActivate: [ MovieGuard ],
+        canActivate: [MovieGuard],
         component: AllMoviesComponent
       },
       {
         path: 'movies/:id',
         component: MovieComponent,
-        canActivate: [ MovieGuard ],
+        canActivate: [MovieGuard],
         resolve: { data: MovieResolver }
       }
     ]
@@ -40,7 +41,8 @@ const routes: Route[] = [
     MovieCardComponent,
     AllMoviesComponent,
     TruncatePipe,
-    MovieComponent
+    MovieComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,6 @@ const routes: Route[] = [
     RouterModule.forRoot(routes)
   ],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
