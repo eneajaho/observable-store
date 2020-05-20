@@ -12,36 +12,28 @@ json-server --watch db.json
 
 # Observable Store
 
-### Set data in services or components
+### Set / Update / Remove data in services or components
 ```js
   // service example
   constructor(private http: HttpClient, private store: Store) { }
+ 
+      getFavorites(): Observable<{ id: number }[]> {
+        return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
+          .pipe(tap(res => this.store.set('favorites', res)));
+      }
+    
+      addFavorite(id: number): Observable<any> {
+        return this.http.post(`${this.api}/favorites`, { id }).pipe(
+          tap(() => this.store.setItem('favorites', id, { id }))
+        );
+      }
+    
+      removeFavorite(id: number): Observable<any> {
+        return this.http.delete(`${this.api}/favorites/${id}`).pipe(
+          tap(() => this.store.removeItem('favorites', id))
+        );
+      }
 
-  getMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.api}/movies`)
-      .pipe(tap(data => this.store.set('movies', data)));
-  }
-  
-  getFavorites(): Observable<{ id: number }[]> {
-    return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
-      .pipe(tap(res => this.store.set('favorites', res)));
-  }
-  
-  addFavorite(id: number): Observable<any> {
-    return this.http.post(`${this.api}/favorites`, { id })
-     .pipe(tap(() => {
-      const currentFav = this.store.get('favorites');
-        this.store.set('favorites', [ ...currentFav, { id } ]);
-      }));
-  }
-
-  removeFavorite(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/favorites/${id}`)
-      .pipe(tap(() => {
-        const currentFav = this.store.get('favorites');
-        const newFav = currentFav.filter(fav => fav.id !== id);
-        this.store.set('favorites', newFav);
-      }));
   }
 ```
 
