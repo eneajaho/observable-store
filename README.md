@@ -50,3 +50,16 @@ json-server --watch db.json
     this.favorites$ = this.store.select<{ id }[]>('favorites');
   }
 ```
+
+### What's included
+- Dumb components
+- Smart components (Containers)
+- Guards
+- Models
+- Pipes
+- Resolvers
+- Services
+- **Observable Store**
+
+### Screenshot
+![Movies Store](https://i.imgur.com/ZqMCaOf.jpg)
