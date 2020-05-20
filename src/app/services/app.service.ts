@@ -30,20 +30,15 @@ export class AppService {
 
 
   addFavorite(id: number): Observable<any> {
-    return this.http.post(`${this.api}/favorites`, { id })
-      .pipe(tap(() => {
-        const currentFav = this.store.get('favorites');
-        this.store.set('favorites', [ ...currentFav, { id } ]);
-      }));
+    return this.http.post(`${this.api}/favorites`, { id }).pipe(
+      tap(() => this.store.setItem('favorites', id, { id }))
+    );
   }
 
   removeFavorite(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/favorites/${id}`)
-      .pipe(tap(() => {
-        const currentFav = this.store.get('favorites');
-        const newFav = currentFav.filter(fav => fav.id !== id);
-        this.store.set('favorites', newFav);
-      }));
+    return this.http.delete(`${this.api}/favorites/${id}`).pipe(
+      tap(() => this.store.removeItem('favorites', id))
+    );
   }
 
 }

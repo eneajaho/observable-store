@@ -13,11 +13,7 @@
       "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg"
     }
   ],
-  "favorites": [
-    {
-      "id": 1
-    }
-  ],
+  "favorites": [],
   "auth": {
     "user": "Enea",
     "token": "Hello World!"

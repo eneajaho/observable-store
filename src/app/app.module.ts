@@ -21,13 +21,13 @@ const routes: Route[] = [
       },
       {
         path: 'movies',
-        canActivate: [MovieGuard],
+        canActivate: [ MovieGuard ],
         component: AllMoviesComponent
       },
       {
         path: 'movies/:id',
         component: MovieComponent,
-        canActivate: [MovieGuard],
+        canActivate: [ MovieGuard ],
         resolve: { data: MovieResolver }
       }
     ]
@@ -50,6 +50,6 @@ const routes: Route[] = [
     RouterModule.forRoot(routes)
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

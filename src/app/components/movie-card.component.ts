@@ -5,7 +5,8 @@ import { Movie } from '../models/Movie';
   selector: 'app-movie-card',
   template: `
     <div class="card shadow border-0">
-      <img [src]="movie.image" [routerLink]="['/movies/', movie.id]" class="card-img-top cp" [alt]="movie.title">
+      <img [src]="movie.image" [routerLink]="['/movies/', movie.id]"
+           class="card-img-top cp" [alt]="movie.title">
       <div class="card-body">
         <h3>{{ movie.title }}</h3>
         <p>{{ movie.description }}</p>
@@ -18,13 +19,13 @@ import { Movie } from '../models/Movie';
       </div>
     </div>
   `,
-  styles: [`    
+  styles: [ `
     .card-body {
       position: absolute;
       bottom: 0;
       background: #ffffff;
-    }
-  `],
+    }`
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieCardComponent {

@@ -1,6 +1,5 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, pluck, tap } from 'rxjs/operators';
-import { isNumber } from 'util';
 import { Auth } from '../models/Auth';
 import { Movie } from '../models/Movie';
 import { Injectable } from '@angular/core';
@@ -48,19 +47,22 @@ export class Store {
 
   set(name: string, state: any, key?: string) {
     const newState = Array.isArray(state) ? arrayToMap(state, key) : state;
-    this.store.next({
-      ...this.value,
-      [name]: newState
-    });
+    this.store.next({ ...this.value, [name]: newState });
   }
 
   setItem(name: string, itemId: string | number, itemState: any) {
     const currentState = this.value[name] ?? new Map();
     const newState = currentState?.set(itemId + '', itemState);
-    this.store.next({
-      ...this.value,
-      [name]: newState
-    });
+    this.store.next({ ...this.value, [name]: newState });
+  }
+
+  removeItem<T>(name: string, itemId: string | number) {
+    const currentState: Map<string, T> = this.value[name];
+    if (currentState instanceof Map) {
+      if (currentState?.delete(itemId + '')) {
+        this.store.next({ ...this.value, [name]: currentState });
+      }
+    }
   }
 
   reset() {
