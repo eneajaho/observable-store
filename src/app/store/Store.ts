@@ -54,6 +54,19 @@ export class Store {
     });
   }
 
+  setItem(name: string, itemId: string | number, itemState: any) {
+    const currentState = this.value[name] ?? new Map();
+    const newState = currentState?.set(itemId + '', itemState);
+    this.store.next({
+      ...this.value,
+      [name]: newState
+    });
+  }
+
+  reset() {
+    this.store.next(initialState);
+  }
+
 }
 
 export function mapToArray(mapObj: Map<string, any>): any {
