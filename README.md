@@ -62,4 +62,4 @@ json-server --watch db.json
 - **Observable Store**
 
 ### Screenshot
-![Movies Store](https://i.imgur.com/ZqMCaOf.jpg)
+![Movies Store](https://i.imgur.com/qaqIetB.jpg)
