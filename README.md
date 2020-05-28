@@ -1,51 +1,52 @@
 # Run Project
 
-Start Angular app
+**Install node modules**
+```bash
+npm install
+```
+
+**Start Angular app**
 ```bash
 ng s -o
 ```
 
-Start json-server
+**Start json-server**
 ```bash
 json-server --watch db.json
 ```
 
-# Observable Store
+## **Observable Store**
 
-### Set / Update / Remove data in services or components
+### Get / Update / Remove data in services or components
 ```js
-  // service example
   constructor(private http: HttpClient, private store: Store) { }
  
-      getFavorites(): Observable<{ id: number }[]> {
-        return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
-          .pipe(tap(res => this.store.set('favorites', res)));
-      }
-    
-      addFavorite(id: number): Observable<any> {
-        return this.http.post(`${this.api}/favorites`, { id }).pipe(
-          tap(() => this.store.setItem('favorites', id, { id }))
-        );
-      }
-    
-      removeFavorite(id: number): Observable<any> {
-        return this.http.delete(`${this.api}/favorites/${id}`).pipe(
-          tap(() => this.store.removeItem('favorites', id))
-        );
-      }
+  getFavorites(): Observable<{ id: number }[]> {
+    return this.http.get<{ id: number }[]>(`${this.api}/favorites`)
+      .pipe(tap(res => this.store.set('favorites', res)));
+  }
 
+  addFavorite(id: number): Observable<any> {
+    return this.http.post(`${this.api}/favorites`, { id }).pipe(
+      tap(() => this.store.setItem('favorites', id, { id }))
+    );
+  }
+
+  removeFavorite(id: number): Observable<any> {
+    return this.http.delete(`${this.api}/favorites/${id}`).pipe(
+      tap(() => this.store.removeItem('favorites', id))
+    );
   }
 ```
 
 ### Reading data in components
 ```js
+  movies$: Observable<Movie[]>;
+  favorites$: Observable<number[]>;
 
   constructor(private service: AppService, private store: Store) { }
 
   ngOnInit() {
-    this.service.getFavorites().pipe(take(1)).subscribe();
-    this.service.getMovies().pipe(take(1)).subscribe();
-
     this.movies$ = this.store.select<Movie[]>('movies');
     this.favorites$ = this.store.select<{ id }[]>('favorites');
   }
@@ -54,6 +55,7 @@ json-server --watch db.json
 ### What's included
 - Dumb components
 - Smart components (Containers)
+- Reactive forms
 - Guards
 - Models
 - Pipes

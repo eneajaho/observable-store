@@ -14,6 +14,9 @@ import { Auth } from '../models/Auth';
           <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/movies">Movies</a>
           </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/new">Add Movie</a>
+          </li>
         </ul>
         <ul class="ml-auto navbar-nav">
           <li class="nav-item active" *ngIf="auth">

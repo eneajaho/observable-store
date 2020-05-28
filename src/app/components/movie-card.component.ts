@@ -8,8 +8,11 @@ import { Movie } from '../models/Movie';
       <img [src]="movie.image" [routerLink]="['/movies/', movie.id]"
            class="card-img-top cp" [alt]="movie.title">
       <div class="card-body">
-        <h3>{{ movie.title }}</h3>
-        <p>{{ movie.description }}</p>
+        <div class="d-flex justify-content-between">
+          <span class="h3">{{ movie.title }}</span>  
+          <a [routerLink]="['/edit', movie.id]">Edit</a>  
+        </div>
+        <p>{{ movie.description | truncate: 80 }}..</p>
         <button *ngIf="!movie.isFavorite" class="btn btn-primary" (click)="add()">
           Add to favorites
         </button>
@@ -24,6 +27,7 @@ import { Movie } from '../models/Movie';
       position: absolute;
       bottom: 0;
       background: #ffffff;
+      width: 100%;
     }`
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

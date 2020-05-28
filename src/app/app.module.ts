@@ -1,17 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { NavigationComponent } from './components/navigation.component';
-import { MovieCardComponent } from './components/movie-card.component';
-import { AllMoviesComponent } from './containers/all-movies.component';
-import { Route, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { Route, RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { NavigationComponent, FavoritesComponent, MovieCardComponent, MovieFormComponent } from './components';
+import { MovieComponent, NewMovieComponent, EditMovieComponent, AllMoviesComponent } from './containers';
+import { MovieGuard, FavoriteGuard } from './guards';
 import { TruncatePipe } from './pipes/truncate.pipe';
-import { MovieComponent } from './containers/movie.component';
 import { MovieResolver } from './resolvers/MovieResolver';
-import { MovieGuard } from './guards/movie.guard';
-import { FavoritesComponent } from './components/favorites.component';
 
 const routes: Route[] = [
   {
@@ -21,7 +19,7 @@ const routes: Route[] = [
       },
       {
         path: 'movies',
-        canActivate: [ MovieGuard ],
+        canActivate: [ MovieGuard, FavoriteGuard ],
         component: AllMoviesComponent
       },
       {
@@ -29,8 +27,21 @@ const routes: Route[] = [
         component: MovieComponent,
         canActivate: [ MovieGuard ],
         resolve: { data: MovieResolver }
+      },
+      {
+        path: 'new',
+        component: NewMovieComponent
+      }, 
+      {
+        path: 'edit/:id',
+        component: EditMovieComponent,
+        canActivate: [ MovieGuard ],
+        resolve: { movie: MovieResolver }
       }
     ]
+  },
+  {
+    path: '**', redirectTo: '', pathMatch: 'full'
   }
 ];
 
@@ -39,17 +50,20 @@ const routes: Route[] = [
     AppComponent,
     NavigationComponent,
     MovieCardComponent,
+    MovieFormComponent,
     AllMoviesComponent,
-    TruncatePipe,
+    NewMovieComponent,
+    EditMovieComponent,
     MovieComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule
   ],
-  providers: [],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

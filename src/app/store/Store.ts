@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, map, pluck, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, pluck } from 'rxjs/operators';
 import { Auth } from '../models/Auth';
 import { Movie } from '../models/Movie';
 import { Injectable } from '@angular/core';
