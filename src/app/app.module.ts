@@ -6,7 +6,7 @@ import { Route, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent, FavoritesComponent, MovieCardComponent, MovieFormComponent } from './components';
-import { MovieComponent, NewMovieComponent, EditMovieComponent, AllMoviesComponent } from './containers';
+import { LayoutComponent, MovieComponent, NewMovieComponent, EditMovieComponent, AllMoviesComponent } from './containers';
 import { MovieGuard, FavoriteGuard } from './guards';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { MovieResolver } from './resolvers/MovieResolver';
@@ -14,7 +14,7 @@ import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
 
 const routes: Route[] = [
   {
-    path: '', component: AppComponent, children: [
+    path: '', component: LayoutComponent, children: [
       {
         path: '', redirectTo: 'movies', pathMatch: 'full'
       },
@@ -49,14 +49,15 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     AppComponent,
+    LayoutComponent,
     NavigationComponent,
     MovieCardComponent,
     MovieFormComponent,
     AllMoviesComponent,
     NewMovieComponent,
     EditMovieComponent,
-    MovieComponent,
     FavoritesComponent,
+    MovieComponent,
     TruncatePipe,
   ],
   imports: [

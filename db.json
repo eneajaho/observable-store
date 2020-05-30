@@ -7,13 +7,13 @@
       "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Iron_Man_poster.jpg"
     },
     {
-      "id": 2,
       "title": "Avengers",
       "description": "Nick Fury is compelled to launch the Avengers Initiative when Loki poses a threat to planet Earth. His squad of superheroes put their minds together to accomplish the task.",
-      "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
+      "id": 2
     },
     {
-      "title": "Age of Ultron",
+      "title": "Avengers - Age of Ultron",
       "description": "Tony Stark builds an artificial intelligence system named Ultron with the help of Bruce Banner. When the sentient Ultron makes plans to wipe out the human race, the Avengers set out to stop him.",
       "image": "https://upload.wikimedia.org/wikipedia/en/f/ff/Avengers_Age_of_Ultron_poster.jpg",
       "id": 3
@@ -25,7 +25,20 @@
       "id": 4
     }
   ],
-  "favorites": [],
+  "favorites": [
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
   "auth": {
     "user": "Enea",
     "token": "Hello World!"

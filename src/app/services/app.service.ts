@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Movie } from '../models/Movie';
 import { Auth } from '../models/Auth';
-import { catchError, tap } from 'rxjs/operators';
+import { tap, exhaustMap } from 'rxjs/operators';
 import { Store } from '../store/Store';
 import { environment } from '../../environments/environment';
 
@@ -46,7 +46,12 @@ export class AppService {
 
   deleteMovie(id: number): Observable<any> {
     return this.http.delete(`${this.api}/movies/${id}`).pipe(
-      tap((res: Movie) => this.store.removeItem('movies', id))
+      tap((res: Movie) => this.store.removeItem('movies', id)),
+      exhaustMap((res: Movie) => {
+        const isFav = this.store.get('favorites', id+ '');
+        if (isFav) { return this.removeFavorite(id); }
+        return of(res);
+      })
     );
   }
 

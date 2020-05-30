@@ -19,6 +19,11 @@ import { Auth } from '../models/Auth';
           </li>
         </ul>
         <ul class="ml-auto navbar-nav">
+        <li class="nav-item active mr-4" *ngIf="favoritesCount">
+            <a class="nav-link">Favorites 
+              <span class="badge badge-light">{{ favoritesCount }}</span>
+            </a>
+          </li>
           <li class="nav-item active" *ngIf="auth">
             <a class="nav-link" routerLink="/">{{ auth.user }}</a>
           </li>
@@ -31,6 +36,7 @@ import { Auth } from '../models/Auth';
 export class NavigationComponent {
 
   @Input() auth: Auth;
+  @Input() favoritesCount: number | null;
 
   showMenu = false;
 

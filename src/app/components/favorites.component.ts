@@ -7,9 +7,13 @@ import { Movie } from '../models/Movie';
     <h4 *ngIf="movies?.length">Favorites</h4>
     <div class="list-group">
       <div *ngFor="let movie of movies" title="Remove from favorites"
-           (click)="removeFromFavorites(movie.id)"
-           class="list-group-item list-group-item-action hover cp">
+           class="list-group-item list-group-item-action d-flex align-items-center justify-content-between hover cp">
         {{ movie.title }}
+        <span 
+          (click)="removeFromFavorites(movie.id)" 
+          class="btn btn-danger btn-sm">
+          Remove
+        </span>
       </div>
     </div>
   `

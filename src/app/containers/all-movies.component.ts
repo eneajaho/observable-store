@@ -9,8 +9,8 @@ import { map, take } from 'rxjs/operators';
   selector: 'app-all-movies',
   template: `
     <div class="row my-4">
-      <div class="col-9">
-        <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+        <div class="row justify-content-center">
           <div *ngFor="let movie of moviesList$ | async"
                class="col-xs-12 col-sm-6 mb-4">
             <app-movie-card
@@ -21,13 +21,12 @@ import { map, take } from 'rxjs/operators';
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-3">
         <app-favorites
           [movies]="favoritesList$ | async"
           (removed)="handleRemove($event)">
         </app-favorites>
       </div>
-
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -35,7 +34,7 @@ import { map, take } from 'rxjs/operators';
 export class AllMoviesComponent implements OnInit {
 
   private movies$: Observable<Movie[]>;
-  private favorites$: Observable<number[]>;
+  private favorites$: Observable<{ id }[]>;
 
   moviesList$: Observable<Movie[]>;
   favoritesList$: Observable<Movie[]>;
@@ -44,13 +43,11 @@ export class AllMoviesComponent implements OnInit {
 
   ngOnInit() {
     this.movies$ = this.store.select<Movie[]>('movies');
-    this.favorites$ = this.store.select<{ id }[]>('favorites').pipe(
-      map(items => items?.map(fav => fav.id))
-    );
+    this.favorites$ = this.store.select<{ id }[]>('favorites');
 
     this.moviesList$ = combineLatest(this.favorites$, this.movies$).pipe(
       map(([ favorites, movies ]) => movies?.map(movie => {
-        return { ...movie, isFavorite: favorites.some(id => movie.id === id) };
+        return { ...movie, isFavorite: favorites?.some(fav => movie.id === fav.id) };
       }))
     );
 

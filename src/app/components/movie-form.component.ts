@@ -29,6 +29,7 @@ import { Movie } from '../models/Movie';
             </div>
            
             <button class="btn btn-primary">Save movie</button>
+            <button type="button" (click)="onPreview()" class="btn btn-primary ml-3">Preview</button>
         </form>
     `
 })
@@ -38,7 +39,9 @@ export class MovieFormComponent implements OnInit {
     form: FormGroup;
 
     @Input() movie: Movie;
+
     @Output() submitted = new EventEmitter<Movie>();
+    @Output() preview = new EventEmitter<Movie>();
 
     constructor(private fb: FormBuilder) { }
 
@@ -59,7 +62,14 @@ export class MovieFormComponent implements OnInit {
             this.form.markAllAsTouched();
         } else {
             this.submitted.emit(this.form.value);
-            this.form.reset();
+        }
+    }
+
+    onPreview() {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+        } else {
+            this.preview.emit(this.form.value);
         }
     }
 
