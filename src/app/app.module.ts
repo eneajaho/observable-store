@@ -10,6 +10,7 @@ import { MovieComponent, NewMovieComponent, EditMovieComponent, AllMoviesCompone
 import { MovieGuard, FavoriteGuard } from './guards';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { MovieResolver } from './resolvers/MovieResolver';
+import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
 
 const routes: Route[] = [
   {
@@ -31,7 +32,7 @@ const routes: Route[] = [
       {
         path: 'new',
         component: NewMovieComponent
-      }, 
+      },
       {
         path: 'edit/:id',
         component: EditMovieComponent,
@@ -63,6 +64,9 @@ const routes: Route[] = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule
+  ],
+  providers: [
+    ErrorInterceptorProvider
   ],
   bootstrap: [ AppComponent ]
 })

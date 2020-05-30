@@ -1,4 +1,4 @@
-# Run Project
+# Run Project Locally - [Live project][https://observable-store.eneajaho.me/]
 
 **Install node modules**
 ```bash
@@ -61,7 +61,11 @@ json-server --watch db.json
 - Pipes
 - Resolvers
 - Services
+- Interceptors
 - **Observable Store**
 
 ### Screenshot
 ![Movies Store](https://i.imgur.com/qaqIetB.jpg)
+
+
+[https://observable-store.eneajaho.me/]: https://observable-store.eneajaho.me/

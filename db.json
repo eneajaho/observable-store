@@ -25,20 +25,7 @@
       "id": 4
     }
   ],
-  "favorites": [
-    {
-      "id": 2
-    },
-    {
-      "id": 1
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    }
-  ],
+  "favorites": [],
   "auth": {
     "user": "Enea",
     "token": "Hello World!"

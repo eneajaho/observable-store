@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Movie } from '../models/Movie';
 import { Auth } from '../models/Auth';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Store } from '../store/Store';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
 
-  private readonly api = 'http://localhost:3000';
+  private readonly api = environment.api;
 
   constructor(private http: HttpClient, private store: Store) { }
 
