@@ -65,7 +65,7 @@ json-server --watch db.json
 - **Observable Store**
 
 ### Screenshot
-![Movies Store](https://i.imgur.com/qaqIetB.jpg)
+![Movies Store](https://i.imgur.com/WWKVb3X.jpg)
 
 
 [https://observable-store.eneajaho.me/]: https://observable-store.eneajaho.me/
