@@ -11,6 +11,7 @@ import { MovieGuard, FavoriteGuard } from './guards';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { MovieResolver } from './resolvers/MovieResolver';
 import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
+import { Store } from './store/Store';
 
 const routes: Route[] = [
   {
@@ -67,7 +68,7 @@ const routes: Route[] = [
     ReactiveFormsModule
   ],
   providers: [
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
   ],
   bootstrap: [ AppComponent ]
 })

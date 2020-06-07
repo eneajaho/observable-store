@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AppService } from '../services/app.service';
-import { Store } from '../store/Store';
-import { combineLatest, Observable } from 'rxjs';
-import { Movie } from '../models/Movie';
-import { map, take } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AllMoviesFacade } from '../facades';
+import { Movie } from '../models';
 
 @Component({
   selector: 'app-all-movies',
@@ -11,7 +10,7 @@ import { map, take } from 'rxjs/operators';
     <div class="row my-4">
       <div class="col-12 col-sm-12 col-md-12 col-lg-9">
         <div class="row justify-content-center">
-          <div *ngFor="let movie of moviesList$ | async"
+          <div *ngFor="let movie of movies$ | async"
                class="col-xs-12 col-sm-6 mb-4">
             <app-movie-card
               [movie]="movie"
@@ -21,46 +20,35 @@ import { map, take } from 'rxjs/operators';
           </div>
         </div>
       </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-3"
+           style="position: sticky; top: 70px; height: fit-content;">
         <app-favorites
-          [movies]="favoritesList$ | async"
+          [movies]="favorites$ | async"
           (removed)="handleRemove($event)">
         </app-favorites>
       </div>
     </div>
   `,
+  providers: [ AllMoviesFacade ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllMoviesComponent implements OnInit {
 
-  private movies$: Observable<Movie[]>;
-  private favorites$: Observable<{ id }[]>;
+  movies$: Observable<Movie[]>;
+  favorites$: Observable<Movie[]>;
 
-  moviesList$: Observable<Movie[]>;
-  favoritesList$: Observable<Movie[]>;
-
-  constructor(private appService: AppService, private store: Store) { }
+  constructor(private facade: AllMoviesFacade) {}
 
   ngOnInit() {
-    this.movies$ = this.store.select<Movie[]>('movies');
-    this.favorites$ = this.store.select<{ id }[]>('favorites');
-
-    this.moviesList$ = combineLatest(this.favorites$, this.movies$).pipe(
-      map(([ favorites, movies ]) => movies?.map(movie => {
-        return { ...movie, isFavorite: favorites?.some(fav => movie.id === fav.id) };
-      }))
-    );
-
-    this.favoritesList$ = this.moviesList$.pipe(
-      map(movies => movies.filter(movie => movie.isFavorite))
-    );
+    this.movies$ = this.facade.movies;
+    this.favorites$ = this.facade.favorites;
   }
 
   handleAdd(id: number) {
-    this.appService.addFavorite(id).pipe(take(1)).subscribe();
+    this.facade.addFavorite(id);
   }
 
   handleRemove(id: number) {
-    this.appService.removeFavorite(id).pipe(take(1)).subscribe();
+    this.facade.removeFavorite(id);
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Movie } from '../models/Movie';
-import { Auth } from '../models/Auth';
-import { tap, exhaustMap } from 'rxjs/operators';
-import { Store } from '../store/Store';
 import { environment } from '../../environments/environment';
+import { tap, exhaustMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Movie, Auth } from '../models';
+import { Store } from '../store';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
@@ -48,7 +47,7 @@ export class AppService {
     return this.http.delete(`${this.api}/movies/${id}`).pipe(
       tap((res: Movie) => this.store.removeItem('movies', id)),
       exhaustMap((res: Movie) => {
-        const isFav = this.store.get('favorites', id+ '');
+        const isFav = this.store.get('favorites', id + '');
         if (isFav) { return this.removeFavorite(id); }
         return of(res);
       })

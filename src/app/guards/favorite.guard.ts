@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Store } from '../store/Store';
-import { AppService } from '../services/app.service';
 import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AppService } from '../services';
+import { Store } from '../store';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class FavoriteGuard implements CanActivate {
 
   constructor(private store: Store, private appService: AppService) {}

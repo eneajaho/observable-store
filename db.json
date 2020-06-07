@@ -1,10 +1,10 @@
 {
   "movies": [
     {
-      "id": 1,
       "title": "Iron Man",
       "description": "Iron Man is a 2008 American superhero film based on the Marvel Comics character of the same name. Produced by Marvel Studios and distributed by Paramount Pictures, it is the first film in the Marvel Cinematic Universe.",
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Iron_Man_poster.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Iron_Man_poster.jpg",
+      "id": 1
     },
     {
       "title": "Avengers",
@@ -13,7 +13,7 @@
       "id": 2
     },
     {
-      "title": "Avengers - Age of Ultron",
+      "title": "Age of Ultron",
       "description": "Tony Stark builds an artificial intelligence system named Ultron with the help of Bruce Banner. When the sentient Ultron makes plans to wipe out the human race, the Avengers set out to stop him.",
       "image": "https://upload.wikimedia.org/wikipedia/en/f/ff/Avengers_Age_of_Ultron_poster.jpg",
       "id": 3
@@ -27,16 +27,16 @@
   ],
   "favorites": [
     {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
       "id": 1
     },
     {
       "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
     }
   ],
   "auth": {

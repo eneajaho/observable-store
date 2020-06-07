@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Movie } from '../models/Movie';
 import { Router } from '@angular/router';
+import { Movie } from '../models';
 
 @Component({
   selector: 'app-movie-card',
   template: `
     <div class="card shadow rounded">
-      <img [src]="movie.image" (click)="goToMovie()" class="card-img-top cp" [alt]="movie.title">
+      <img [src]="movie.image" (click)="seeMore()" class="card-img-top cp" [alt]="movie.title">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <span class="h3">{{ movie.title }}</span>  
-          <!-- <a class="btn btn-link" [routerLink]="['/edit', movie.id]">Edit</a>   -->
+          <span class="h3">{{ movie.title }}</span>
         </div>
         <p>{{ movie.description | truncate: 80 }}..</p>
         <button *ngIf="showAdd && !this.isPreview" class="btn btn-primary" (click)="add()">
@@ -24,9 +23,10 @@ import { Router } from '@angular/router';
   `,
   styles: [ `
     .card {
-      border: none!important;
+      border: none !important;
       overflow: hidden;
     }
+
     .card-body {
       position: absolute;
       bottom: 0;
@@ -34,6 +34,14 @@ import { Router } from '@angular/router';
       width: 100%;
       background: linear-gradient(180deg, #00000014 -10%, rgb(0, 0, 0) 100%);
       z-index: 2;
+    }
+
+    img {
+      transition: 0.5s all;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -56,9 +64,9 @@ export class MovieCardComponent {
     this.removed.emit(this.movie.id);
   }
 
-  goToMovie() {
+  seeMore() {
     if (this.isPreview) { return; }
-    this.router.navigate(['/movies/', this.movie.id]);
+    this.router.navigate([ '/movies/', this.movie.id ]);
   }
 
   get showAdd(): boolean {

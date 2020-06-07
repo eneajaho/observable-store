@@ -1,4 +1,4 @@
-# Run Project Locally - [Live project][https://observable-store.eneajaho.me/]
+## Run Project Locally - [Live project][https://observable-store.eneajaho.me/]
 
 **Install node modules**
 ```bash
@@ -15,9 +15,21 @@ ng s -o
 json-server --watch db.json
 ```
 
-## **Observable Store**
+### What's included
+- Smart components
+- Dumb components
+- Reactive forms
+- Interceptors
+- Resolvers
+- Services
+- Facades
+- Guards
+- Pipes
+- Models
+- **Observable Store**
 
-### Get / Update / Remove data in services or components
+
+### CRUD data in services or components
 ```js
   constructor(private http: HttpClient, private store: Store) { }
  
@@ -39,33 +51,23 @@ json-server --watch db.json
   }
 ```
 
-### Reading data in components
+### Getting data from store
 ```js
   movies$: Observable<Movie[]>;
-  favorites$: Observable<number[]>;
+  favorites$: Observable<Favorite[]>;
 
-  constructor(private service: AppService, private store: Store) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
     this.movies$ = this.store.select<Movie[]>('movies');
-    this.favorites$ = this.store.select<{ id }[]>('favorites');
+    this.favorites$ = this.store.select<Favorite[]>('favorites');
   }
 ```
-
-### What's included
-- Dumb components
-- Smart components (Containers)
-- Reactive forms
-- Guards
-- Models
-- Pipes
-- Resolvers
-- Services
-- Interceptors
-- **Observable Store**
 
 ### Screenshot
 ![Movies Store](https://i.imgur.com/WWKVb3X.jpg)
 
-
 [https://observable-store.eneajaho.me/]: https://observable-store.eneajaho.me/
+
+### License
+MIT

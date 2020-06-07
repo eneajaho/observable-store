@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '../store/Store';
 import { AppService } from '../services/app.service';
 import { Observable } from 'rxjs';
 import { Auth } from '../models/Auth';
-import { take, map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-layout',
   template: `
-    <app-navigation 
-      [auth]="auth$ | async" 
+    <app-navigation
+      [auth]="auth$ | async"
       [favoritesCount]="favoritesCount$ | async">
     </app-navigation>
     <div class="container mt-5">
@@ -19,7 +19,8 @@ import { take, map } from 'rxjs/operators';
         </div>
       </div>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent implements OnInit {
 
@@ -31,7 +32,7 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.auth$ = this.store.select<Auth>('auth');
     this.appService.getUser().pipe(take(1)).subscribe();
-  
+
     this.favoritesCount$ = this.store.select<{ id }[]>('favorites').pipe(
       map(items => items ? items.length : null)
     );

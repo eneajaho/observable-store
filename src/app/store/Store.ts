@@ -1,84 +1,158 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, pluck } from 'rxjs/operators';
-import { Auth } from '../models/Auth';
-import { Movie } from '../models/Movie';
+import { distinctUntilChanged, filter, map, pluck } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 export interface State {
-  readonly auth?: Auth;
-  readonly movies?: Movie[];
-
   [key: string]: any;
 }
-
+/**
+ * If needed the store can have a default state
+ */
 const initialState: State = {};
 
 @Injectable({ providedIn: 'root' })
 export class Store {
 
+  /**
+   * store is initialized as BehaviorSubject because we may need an initial state in the store
+   */
+  private store = new BehaviorSubject<State>(initialState);
+
+  /**
+   * store$ is the store stream, but only as observable and not as observer
+   */
+  private store$ = this.store.asObservable().pipe(distinctUntilChanged());
+
+  /**
+   * Returns the current value of the store's state
+   */
   get value() { return this.store.value; }
 
-  private store = new BehaviorSubject<State>(initialState);
-  private store$ = this.store.asObservable();
-
-  select<T>(name: string, itemId?: string): Observable<T> {
+  /**
+   * Get a piece of state as observable
+   * @param key Selector (key) of the object in the state
+   * @param itemId If provided, return the value of that key in the selected object
+   */
+  select<T>(key: string, itemId?: string): Observable<T> {
     return this.store$.pipe(
-      pluck(name),
-      map(val => {
-        if (val instanceof Map) {
-          if (itemId) {
-            return val.get(itemId);
-          }
-          return mapToArray(val);
-        }
-        return val ?? null;
-      }),
-      filter(val => val !== null || undefined)
+      pluck(key),
+      map(state => this.getState<T>(state, itemId)),
+      filter(val => val !== null),
+      distinctUntilChanged(),
     );
   }
 
-  get<T>(name: string, itemId?: string) {
-    const result = this.value[name];
-    if (result instanceof Map) {
-      return itemId ? (result.get(itemId) ?? null) : mapToArray(result);
-    }
-    return result;
+  /**
+   * Get value of a piece of state
+   * @param key Selector (key) of the object in the state
+   * @param itemId If provided, return the value of that key in the selected object
+   */
+  get<T>(key: string, itemId?: string): T | any | null {
+    if (!key) { return null; }
+    const state = this.value[key];
+    return this.getState(state, itemId);
   }
 
-  set(name: string, state: any, key?: string) {
-    const newState = Array.isArray(state) ? arrayToMap(state, key) : state;
-    this.store.next({ ...this.value, [name]: newState });
+  /**
+   * Adds object in state identified by key;
+   * @param key Selector (key) of the object in the state
+   * @param state Object that will be appended in the state
+   * @param keyId Identifier for the items if the object is an array
+   * @return Boolean
+   */
+  set(key: string, state: any, keyId?: string): boolean {
+    if (!key || !state) { return false; }
+    const newState = Array.isArray(state) ? arrayToMap(state, keyId) : state;
+    this.setState(key, newState);
+    return true;
   }
 
-  setItem(name: string, itemId: string | number, itemState: any) {
-    const currentState = this.value[name] ?? new Map();
+  /**
+   * Sets a value for an item in an array in the state
+   * @param key Selector (key) of the object in the state
+   * @param itemId Id of the item that will be modified or added in the state
+   * @param itemState The value for the item that will be changed, default is null
+   * @return Boolean
+   */
+  setItem(key: string, itemId: string | number, itemState: any = null): boolean {
+    if (!key || !itemId) { return false; }
+    const currentState = this.value[key] ?? new Map();
     const newState = currentState?.set(itemId + '', itemState);
-    this.store.next({ ...this.value, [name]: newState });
+    this.setState(key, newState);
+    return true;
   }
 
-  removeItem<T>(name: string, itemId: string | number) {
-    const currentState: Map<string, T> = this.value[name];
-    if (currentState instanceof Map) {
-      if (currentState?.delete(itemId + '')) {
-        this.store.next({ ...this.value, [name]: currentState });
-      }
-    }
+  /**
+   * Removes an item from an array in the state
+   * @param key Key of the object in the state
+   * @param id Id of the item that will be removed
+   * @return Boolean
+   */
+  removeItem<T>(key: string, id: string | number): boolean {
+    if (!key || !id) { return false; }
+    const state: Map<string, T> = this.value[key];
+    if (!(state instanceof Map)) { return false; }
+    state?.delete(id + '');
+    this.setState(key, state);
+    return true;
   }
 
+  /**
+   * Resets the state to it's initial state
+   */
   reset() {
     this.store.next(initialState);
   }
 
+  /**
+   * Return the correct value of a piece of state
+   * Ex.: If type of the piece of state is Map, convert it to array and then return it.
+   * @param state Key of the object in the state
+   * @param itemId If provided, return the value of that key in the selected state
+   * @return Boolean
+   */
+  private getState<T>(state: any, itemId: string): T | null {
+    if (!state) { return null; }
+    if (!(state instanceof Map)) { return state; }
+    return itemId ? (state.get(itemId) ?? null) : mapToArray(state);
+  }
+
+  /**
+   * Appends new state object to the state
+   * @param key Selector (key) of the object in the state
+   * @param value Object that will be appended in the state
+   * @return Boolean
+   */
+  private setState(key: string, value: any): boolean {
+    if (!key || !value) { return false; }
+    this.store.next({ ...this.value, [key]: value });
+    return true;
+  }
+
 }
 
-export function mapToArray(mapObj: Map<string, any>): any {
-  const arr = [];
-  for (const value of mapObj.values()) { arr.push(value); }
-  return arr;
+/**
+ * Converts a Map object into array
+ * @param mapObject Map object that will be converted
+ * @return Array of map items
+ */
+export function mapToArray<T>(mapObject: Map<string, T>): T[] {
+  const array: T[] = [];
+  for (const value of mapObject.values()) {
+    array.push(value);
+  }
+  return array;
 }
 
-export function arrayToMap<T>(arr: T[], key: string = 'id'): Map<string, T> {
-  const newMap = new Map<string, T>();
-  arr.forEach(item => { newMap.set(item[key] + '', item); });
-  return newMap;
+/**
+ * Converts an array of elements into Map object
+ * @param array Array that will be converted to map
+ * @param key Is used as key for the map, default is 'id'
+ * @return Map with key value pairs of the array
+ */
+export function arrayToMap<T>(array: T[], key: string = 'id'): Map<string, T> {
+  return array.reduce((accumulator, object) => {
+    accumulator.set(object[key] + '', object);
+    return accumulator;
+  }, new Map<string, T>());
 }
