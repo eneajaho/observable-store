@@ -26,7 +26,7 @@ json-server --watch db.json
 - Guards
 - Pipes
 - Models
-- **Observable Store**
+- **Observable Store** - [Docs](https://github.com/eneajaho/observable-store/blob/master/src/app/store/README.md)
 
 
 ### CRUD data in services or components
@@ -69,5 +69,9 @@ json-server --watch db.json
 
 [https://observable-store.eneajaho.me/]: https://observable-store.eneajaho.me/
 
-### License
-MIT
+
+---
+
+> License: **MIT**
+
+> Author: **Enea Jahollari** 
