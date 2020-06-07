@@ -114,7 +114,7 @@ export class Store {
   private getState<T>(state: any, itemId: string): T | null {
     if (!state) { return null; }
     if (!(state instanceof Map)) { return state; }
-    return itemId ? (state.get(itemId) ?? null) : mapToArray(state);
+    return itemId ? (state.get(itemId + '') ?? null) : mapToArray(state);
   }
 
   /**
