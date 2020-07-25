@@ -62,8 +62,18 @@ export class Store {
    */
   set(key: string, state: any, keyId?: string): boolean {
     if (!key || !state) { return false; }
-    const newState = Array.isArray(state) ? arrayToMap(state, keyId) : state;
-    this.setState(key, newState);
+    if (Array.isArray(state)) {
+      /** if the user wants to store an array as array and not as Map, keyId must be 'storeAsArray'
+       * use case: When we want to save an array of strings, numbers etc., where items doesn't necessarily have an unique key
+       */
+      if (keyId === 'storeAsArray') {
+        this.setState(key, state);
+        return true;
+      }
+      this.setState(key, arrayToMap(state, keyId));
+      return true;
+    }
+    this.setState(key, state);
     return true;
   }
 
