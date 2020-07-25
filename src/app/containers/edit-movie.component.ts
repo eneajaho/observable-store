@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Movie } from '../models/Movie';
-import { AppService } from '../services/app.service';
+import { Movie } from '../models';
+import { AppService } from '../services';
 import { take, pluck, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -51,7 +51,6 @@ export class EditMovieComponent implements OnInit {
 
   editMovie(movie: Movie) {
     const payload = { ...movie, id: this.movieId };
-
     this.appService.editMovie(payload).pipe(take(1)).subscribe(res => {
       this.router.navigate([ 'movies', res.id ]);
     });

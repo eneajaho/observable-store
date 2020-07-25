@@ -6,12 +6,18 @@ import { Route, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent, FavoritesComponent, MovieCardComponent, MovieFormComponent } from './components';
-import { LayoutComponent, MovieComponent, NewMovieComponent, EditMovieComponent, AllMoviesComponent } from './containers';
-import { MovieGuard, FavoriteGuard } from './guards';
+import {
+  LayoutComponent,
+  MovieComponent,
+  NewMovieComponent,
+  EditMovieComponent,
+  AllMoviesComponent,
+  ProtectedComponent
+} from './containers';
+import { MovieGuard, FavoriteGuard, AuthGuard } from './guards';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { MovieResolver } from './resolvers/MovieResolver';
-import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
-import { Store } from './store/Store';
+import { ErrorInterceptorProvider, LoaderInterceptorProvider } from './interceptors';
 
 const routes: Route[] = [
   {
@@ -39,6 +45,11 @@ const routes: Route[] = [
         component: EditMovieComponent,
         canActivate: [ MovieGuard ],
         resolve: { movie: MovieResolver }
+      },
+      {
+        path: 'protected',
+        component: ProtectedComponent,
+        canActivate: [ AuthGuard ]
       }
     ]
   },
@@ -59,6 +70,7 @@ const routes: Route[] = [
     EditMovieComponent,
     FavoritesComponent,
     MovieComponent,
+    ProtectedComponent,
     TruncatePipe,
   ],
   imports: [
@@ -69,6 +81,7 @@ const routes: Route[] = [
   ],
   providers: [
     ErrorInterceptorProvider,
+    LoaderInterceptorProvider
   ],
   bootstrap: [ AppComponent ]
 })

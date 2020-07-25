@@ -42,21 +42,6 @@ export class Store {
     );
   }
 
-  /** Queries the state object
-   * @param queryFunction A function that will return the queried state object;
-   */
-  query<T>(queryFunction): Observable<T> | Observable<any> {
-    console.log(queryFunction);
-    return this.store$.pipe(
-      map(state => {
-        const toReturn: T = queryFunction(state);
-        return (toReturn instanceof Map) ? mapToArray(toReturn) : toReturn;
-      }),
-      filter(val => !!val),
-      distinctUntilChanged(),
-    );
-  }
-
   /**
    * Get value of a piece of state
    * @param key Selector (key) of the object in the state

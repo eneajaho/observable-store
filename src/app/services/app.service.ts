@@ -31,6 +31,18 @@ export class AppService {
     );
   }
 
+  logout() {
+    return this.http.post(`${this.api}/auth`, {}).pipe(
+      tap(() => this.store.set('auth', {}))
+    );
+  }
+
+  login() {
+    return this.http.post(`${this.api}/auth`, { user: 'Enea', token: 'Hello World!' }).pipe(
+      tap(() => this.store.set('auth', { user: 'Enea', token: 'Hello World!' }))
+    );
+  }
+
   addMovie(movie: Movie): Observable<any> {
     return this.http.post(`${this.api}/movies`, movie).pipe(
       tap((res: Movie) => this.store.setItem('movies', res.id, res))
