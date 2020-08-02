@@ -57,3 +57,14 @@ $alert-border-width:                2px;
 
 .cp { cursor: pointer; }
 .outline-0 { outline: none; }
+
+
+footer {
+  opacity: 0.4;
+  transition: 0.2s all;
+}
+footer:hover {
+  background: rgba(238, 238, 238, 0.26);
+  opacity: 1;
+}
+

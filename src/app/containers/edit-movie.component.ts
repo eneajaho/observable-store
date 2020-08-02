@@ -61,7 +61,9 @@ export class EditMovieComponent implements OnInit {
   }
 
   delete() {
-    this.appService.deleteMovie(this.movieId).pipe(take(1)).subscribe();
-    this.router.navigate([ '/movies' ]);
+    if (confirm('Are you sure you want to delete this movie?')) {
+      this.appService.deleteMovie(this.movieId).pipe(take(1)).subscribe();
+      this.router.navigate([ '/movies' ]);
+    }
   }
 }

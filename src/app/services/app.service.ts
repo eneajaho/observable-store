@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { tap, exhaustMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Movie, Auth } from '../models';
+import { Movie } from '../models';
 import { Store } from '../store';
 
 @Injectable({ providedIn: 'root' })
@@ -25,23 +25,6 @@ export class AppService {
     );
   }
 
-  getUser(): Observable<Auth> {
-    return this.http.get<Auth>(`${this.api}/auth`).pipe(
-      tap(res => this.store.set('auth', res))
-    );
-  }
-
-  logout() {
-    return this.http.post(`${this.api}/auth`, {}).pipe(
-      tap(() => this.store.set('auth', {}))
-    );
-  }
-
-  login() {
-    return this.http.post(`${this.api}/auth`, { user: 'Enea', token: 'Hello World!' }).pipe(
-      tap(() => this.store.set('auth', { user: 'Enea', token: 'Hello World!' }))
-    );
-  }
 
   addMovie(movie: Movie): Observable<any> {
     return this.http.post(`${this.api}/movies`, movie).pipe(

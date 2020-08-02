@@ -1,7 +1,7 @@
 {
   "movies": [
     {
-      "title": "Iron Man",
+      "title": "Iron Man 2",
       "description": "Iron Man is a 2008 American superhero film based on the Marvel Comics character of the same name. Produced by Marvel Studios and distributed by Paramount Pictures, it is the first film in the Marvel Cinematic Universe.",
       "image": "https://upload.wikimedia.org/wikipedia/en/0/00/Iron_Man_poster.jpg",
       "id": 1
@@ -25,14 +25,7 @@
       "id": 4
     }
   ],
-  "favorites": [
-    {
-      "id": 2
-    },
-    {
-      "id": 4
-    }
-  ],
+  "favorites": [],
   "auth": {
     "user": "Enea",
     "token": "Hello World!"

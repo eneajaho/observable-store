@@ -3,11 +3,8 @@ import { HttpRequest, HttpHandler, HttpInterceptor, HttpErrorResponse, HTTP_INTE
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-  constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     return next.handle(request).pipe(
@@ -37,8 +34,10 @@ export class ErrorInterceptor implements HttpInterceptor {
           let modalStateErrors = '';
           if (serverError.errors && typeof serverError.errors === 'object') {
             for (const key in serverError.errors) {
-              if (serverError.errors[key]) {
-                modalStateErrors += serverError.errors[key] + '\n';
+              if (serverError.errors.hasOwnProperty(key)) {
+                if (serverError.errors[key]) {
+                  modalStateErrors += serverError.errors[key] + '\n';
+                }
               }
             }
           }

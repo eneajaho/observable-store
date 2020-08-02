@@ -11,7 +11,8 @@ export class MovieResolver implements Resolve<Movie> {
   constructor(private store: Store) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.store.select('movies', route.paramMap.get('id')).pipe(take(1));
+    const movieId = route.paramMap.get('id');
+    return this.store.select('movies', movieId).pipe(take(1));
   }
 
 }

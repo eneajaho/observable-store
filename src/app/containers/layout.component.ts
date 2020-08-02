@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '../store';
-import { AppService, LoaderService } from '../services';
+import { LoaderService } from '../services';
 import { Observable } from 'rxjs';
 import { Auth } from '../models';
 import { map, take } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -16,13 +17,20 @@ import { map, take } from 'rxjs/operators';
       (login)="login($event)"
     >
     </app-navigation>
-    <div class="container mt-5">
+    <div class="container min-vh-100 mt-5">
       <div class="row pt-4">
         <div class="col-12">
           <router-outlet></router-outlet>
         </div>
       </div>
     </div>
+    <footer class="mt-3 py-3">
+      <div class="text-center">
+        Made with ❤ by <a href="https://eneajaho.me" target="_blank">Enea</a>.
+        <br>
+        <a href="https://github.com/eneajaho/observable-store" target="_blank">View repository on Github</a>
+      </div>
+    </footer>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,11 +40,11 @@ export class LayoutComponent implements OnInit {
   favoritesCount$: Observable<number>;
   loading$: Observable<boolean>;
 
-  constructor(private store: Store, private appService: AppService, private loader: LoaderService) {}
+  constructor(private store: Store, private authService: AuthService,
+              private loader: LoaderService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.auth$ = this.store.select<Auth>('auth');
-    this.appService.getUser().pipe(take(1)).subscribe();
     this.loading$ = this.loader.loading$;
 
     this.favoritesCount$ = this.store.select<{ id }[]>('favorites').pipe(
@@ -45,10 +53,12 @@ export class LayoutComponent implements OnInit {
   }
 
   logout(e) {
-    this.appService.logout().pipe(take(1)).subscribe();
+    this.authService.logout().pipe(take(1)).subscribe();
   }
 
   login(e) {
-    this.appService.login().pipe(take(1)).subscribe();
+    this.authService.login().pipe(take(1)).subscribe();
   }
 }
+
+

@@ -17,7 +17,7 @@ import { Auth } from '../models';
             <a class="nav-link" routerLink="/movies">Movies</a>
           </li>
           <li (click)="hide()" class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/new">Add Movie</a>
+            <a class="nav-link" *ngIf="auth?.token" routerLink="/new">Add Movie</a>
           </li>
           <li (click)="hide()" class="nav-item" routerLinkActive="active">
             <a class="nav-link" [class.disabled]="!auth?.token" routerLink="/protected">Protected Route</a>
