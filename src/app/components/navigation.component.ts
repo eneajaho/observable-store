@@ -7,7 +7,7 @@ import { Auth } from '../models';
     <nav class="navbar bg-primary navbar-dark navbar-expand-md fixed-top py-xs-3 px-3"
          [ngClass]="scrolled ? 'shadow py-2' : 'py-3'">
       <a (click)="hide()" class="navbar-brand d-flex align-items-center" routerLink="/">
-        <svg  class="movie-logo">
+        <svg class="movie-logo">
           <use xlink:href="assets/svg/cinema.svg#Capa_1" style="fill: white;"></use>
         </svg>
         My Movies
@@ -113,7 +113,7 @@ export class NavigationComponent {
   }
 
   @HostListener('window:scroll', [ '$event' ])
-  onWindowScroll(e) {
+  onWindowScroll() {
     this.scrolled = window.pageYOffset > 50;
   }
 }

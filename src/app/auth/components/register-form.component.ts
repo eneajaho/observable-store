@@ -9,7 +9,7 @@ import { Register } from '../models/Register';
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" class="form-control" formControlName="name" placeholder="Your name.."
-               [class.border-danger]="hasError('email')"/>
+               [class.border-danger]="hasError('name')"/>
         <div *ngIf="hasError('name')" class="invalid-feedback d-block">
           Name must be more than 3 chars!
         </div>
@@ -25,7 +25,7 @@ import { Register } from '../models/Register';
       <div class="form-group">
         <label for="password">Password</label>
         <input type="text" id="password" class="form-control" formControlName="password" placeholder="Your password.."
-               [class.border-danger]="hasError('email')"/>
+               [class.border-danger]="hasError('password')"/>
         <div *ngIf="hasError('password')" class="invalid-feedback d-block">
           Password must be more than 8 chars!
         </div>

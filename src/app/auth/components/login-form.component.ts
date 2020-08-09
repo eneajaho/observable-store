@@ -17,7 +17,7 @@ import { Login } from '../models/Login';
       <div class="form-group">
         <label for="password">Password</label>
         <input type="text" id="password" class="form-control" formControlName="password" placeholder="Your password.."
-               [class.border-danger]="hasError('email')"/>
+               [class.border-danger]="hasError('password')"/>
         <div *ngIf="hasError('password')" class="invalid-feedback d-block">
           Password must be more than 8 chars!
         </div>
