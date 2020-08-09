@@ -6,6 +6,8 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Store } from '../store';
 import { Router } from '@angular/router';
+import { Login } from '../auth/models/Login';
+import { Register } from '../auth/models/Register';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -29,9 +31,23 @@ export class AuthService {
     );
   }
 
-  login() {
+  login(payload: Login) {
+    // not going to use payload, because app will use fake data anyway
     return this.http.post(`${this.api}/auth`, { user: 'Enea', token: 'Hello World!' }).pipe(
-      tap(() => this.store.set('auth', { user: 'Enea', token: 'Hello World!' }))
+      tap(() => {
+        this.store.set('auth', { user: 'Enea', token: 'Hello World!' });
+        this.router.navigate(['/']);
+      })
+    );
+  }
+
+  register(payload: Register) {
+    // not going to use payload, because app will use fake data anyway
+    return this.http.post(`${this.api}/auth`, { user: payload.name, token: 'Hello World!' }).pipe(
+      tap(() => {
+        this.store.set('auth', { user: payload.name, token: 'Hello World!' });
+        this.router.navigate(['/']);
+      })
     );
   }
 }

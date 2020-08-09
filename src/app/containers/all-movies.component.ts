@@ -11,7 +11,7 @@ import { Movie } from '../models';
         <div class="row justify-content-center">
           <ng-container *ngIf="movies$ | async as movies; else loading">
             <div *ngFor="let movie of movies"
-                 class="col-xs-12 col-sm-6 mb-4">
+                 class="col-xs-12 col-sm-6 col-md-4 mb-4">
               <app-movie-card
                 [movie]="movie"
                 (added)="handleAdd($event)"
@@ -20,7 +20,8 @@ import { Movie } from '../models';
             </div>
           </ng-container>
           <ng-template #loading>
-            <div class="spinner-border text-primary mt-4" style="width: 3rem; height: 3rem;" role="status">
+            <div class="spinner-border text-primary mt-4" 
+                 style="width: 3rem; height: 3rem;" role="status">
               <span class="sr-only">Loading...</span>
             </div>
           </ng-template>

@@ -6,11 +6,23 @@ import { Auth } from '../models';
   template: `
     <nav class="navbar bg-primary navbar-dark navbar-expand-md fixed-top py-xs-3 px-3"
          [ngClass]="scrolled ? 'shadow py-2' : 'py-3'">
-      <a (click)="hide()" class="navbar-brand" routerLink="/">My Movies</a>
-      <button (click)="show()" class="navbar-toggler" type="button">
-        <span *ngIf="!showMenu" class="navbar-toggler-icon"></span>
-        <span *ngIf="showMenu" class="close">&times;</span>
-      </button>
+      <a (click)="hide()" class="navbar-brand d-flex align-items-center" routerLink="/">
+        <svg  class="movie-logo">
+          <use xlink:href="assets/svg/cinema.svg#Capa_1" style="fill: white;"></use>
+        </svg>
+        My Movies
+      </a>
+      <div class="d-flex align-items-center ">
+        <div *ngIf="loading" class="spinner-border spinner-border-sm d-inline-block d-sm-none text-white active mr-3"
+             role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <button (click)="show()" class="navbar-toggler" type="button">
+          <span *ngIf="!showMenu" class="navbar-toggler-icon"></span>
+          <span *ngIf="showMenu" class="close">&times;</span>
+        </button>
+      </div>
+
       <div class="collapse navbar-collapse" [class.show]="showMenu">
         <ul class="navbar-nav">
           <li (click)="hide()" class="nav-item" routerLinkActive="active">
@@ -20,7 +32,8 @@ import { Auth } from '../models';
             <a class="nav-link" *ngIf="auth?.token" routerLink="/new">Add Movie</a>
           </li>
           <li (click)="hide()" class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [class.disabled]="!auth?.token" routerLink="/protected">Protected Route</a>
+            <a class="nav-link" [class.disabled]="!auth?.token"
+               routerLink="/protected">Protected Route</a>
           </li>
         </ul>
         <ul class="ml-auto navbar-nav">
@@ -44,7 +57,8 @@ import { Auth } from '../models';
           </ng-container>
           <ng-container *ngIf="!auth?.token">
             <li class="nav-item d-flex align-items-center active">
-              <button (click)="handleLogin()" class="btn btn-sm btn-success">Login</button>
+              <span routerLink="/auth/login" class="px-1 cp nav-link">Login</span>
+              <span routerLink="/auth/register" class="px-1 cp nav-link">Register</span>
             </li>
           </ng-container>
         </ul>
@@ -66,6 +80,12 @@ import { Auth } from '../models';
       font-size: 31px;
       font-weight: 600;
     }
+
+    .movie-logo {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+    }
   ` ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -76,7 +96,6 @@ export class NavigationComponent {
   @Input() favoritesCount: number | null;
 
   @Output() logout = new EventEmitter();
-  @Output() login = new EventEmitter();
 
   showMenu = false;
   scrolled = false;
@@ -91,10 +110,6 @@ export class NavigationComponent {
 
   handleLogout() {
     this.logout.emit(true);
-  }
-
-  handleLogin() {
-    this.login.emit(true);
   }
 
   @HostListener('window:scroll', [ '$event' ])

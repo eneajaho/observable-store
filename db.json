@@ -23,9 +23,28 @@
       "description": "Captain America is a fictional superhero appearing in American comic books published by Marvel Comics.\nCreated by cartoonists Joe Simon and Jack Kirby, the character first appeared in Captain America Comics #1 from Timely Comics, a predecessor of Marvel Comics.",
       "image": "https://upload.wikimedia.org/wikipedia/en/3/37/Captain_America_The_First_Avenger_poster.jpg",
       "id": 4
+    },
+    {
+      "title": "Good Will Hunting",
+      "description": "Will Hunting, a genius in mathematics, solves all the difficult mathematical problems. When he faces an emotional crisis, he takes help from psychiatrist Dr Sean Maguireto, who helps him recover.",
+      "image": "https://www.gstatic.com/tv/thumb/v22vodart/20224/p20224_v_v8_al.jpg",
+      "id": 5
+    },
+    {
+      "title": "Venom",
+      "description": "While trying to take down Carlton, the CEO of Life Foundation, Eddie, a journalist, investigates experiments of human trials. Unwittingly, he gets merged with a symbiotic alien with lethal abilities.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/1/18/Venom_%282018_film_poster%29.png",
+      "id": 6
     }
   ],
-  "favorites": [],
+  "favorites": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
   "auth": {
     "user": "Enea",
     "token": "Hello World!"

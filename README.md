@@ -16,8 +16,9 @@ json-server --watch db.json
 ```
 
 ### What's included
-- Smart components
-- Dumb components
+- Smart components (Containers)
+- Dumb components (Presenters)
+- Lazy loading modules
 - Reactive forms
 - Interceptors
 - Resolvers

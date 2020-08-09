@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
       map((auth: Auth) => {
         if (auth?.token) { return true; }
         this.router.navigate([ '/' ]).then(() => {
-          console.warn(`You cannot access this route: "${state.url}".`);
+          console.warn(`💀 You cannot access this route: "${state.url}".`);
         });
         return false;
       })

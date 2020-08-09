@@ -12,13 +12,12 @@ import { Movie } from '../models';
         <button class="btn btn-primary" [routerLink]="['/edit/', movie.id]">Edit Movie</button>
       </div>
       <div class="col-12 col-md-3">
-        <img [src]="movie.image" class="img-thumbnail rounded mb-4">
+        <img [src]="movie.image" class="w-100 h-auto img-thumbnail rounded mb-4">
       </div>
       <div class="col-12 col-md-9">
         <h3>{{ movie.title }}</h3>
         <p>{{ movie.description }}</p>
       </div>
-
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

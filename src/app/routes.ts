@@ -1,4 +1,4 @@
-import { Route } from '@angular/router';
+import { Routes } from '@angular/router';
 import {
   AllMoviesComponent,
   EditMovieComponent,
@@ -7,10 +7,10 @@ import {
   NewMovieComponent,
   ProtectedComponent
 } from './containers';
-import { AuthGuard, FavoriteGuard, MovieGuard } from './guards';
+import { AuthGuard, NonAuthGuard, FavoriteGuard, MovieGuard } from './guards';
 import { MovieResolver } from './resolvers/MovieResolver';
 
-export const routes: Route[] = [
+export const routes: Routes = [
   {
     path: '', redirectTo: 'movies', pathMatch: 'full'
   },
@@ -44,6 +44,12 @@ export const routes: Route[] = [
         canActivate: [ AuthGuard ]
       }
     ]
+  },
+  {
+    path: 'auth',
+    loadChildren: async () => (await import('./auth/auth.module'))
+      .AuthModule,
+    canActivate: [ NonAuthGuard ],
   },
   {
     path: '**', redirectTo: '', pathMatch: 'full'

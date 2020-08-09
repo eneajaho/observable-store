@@ -10,8 +10,8 @@ import { Movie } from '../models';
            class="list-group-item list-group-item-action cp">
         {{ movie.title }}
         <button (click)="removeFromFavorites(movie.id)"
-          class="btn btn-danger btn-sm">
-          Remove
+          class="btn btn-danger btn-sm cross">
+           &times;
         </button>
       </div>
     </div>
@@ -26,8 +26,16 @@ import { Movie } from '../models';
       border-right: none;
       border-color: #31313112;
     }
+
     .list-group-item:last-child {
       border-bottom: none;
+    }
+
+    .cross {
+      font-weight: 800;
+      font-size: 20px;
+      padding: 2px 7px 5px 7px;
+      line-height: 20px;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

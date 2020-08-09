@@ -9,10 +9,10 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     return next.handle(request).pipe(
       catchError(error => {
-
+        
         if (error.status === 0) {
           if (error?.statusText === 'Unknown Error') {
-            return throwError('Server is not responding!');
+            return throwError('💀 Server is not responding!');
           }
           return throwError(error.statusText);
         }

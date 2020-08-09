@@ -23,7 +23,6 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { ErrorInterceptorProvider, LoaderInterceptorProvider } from './interceptors';
 import { routes } from './routes';
 
-
 @NgModule({
   declarations: [
     AppComponent,
