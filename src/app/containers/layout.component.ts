@@ -4,7 +4,7 @@ import { LoaderService } from '../services';
 import { Observable } from 'rxjs';
 import { Auth } from '../models';
 import { map, take } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services';
 
 @Component({
   selector: 'app-layout',
@@ -14,7 +14,6 @@ import { AuthService } from '../services/auth.service';
       [favoritesCount]="favoritesCount$ | async"
       [loading]="loading$ | async"
       (logout)="logout($event)"
-      (login)="login($event)"
     >
     </app-navigation>
     <div class="container min-vh-100 mt-5">
@@ -54,10 +53,6 @@ export class LayoutComponent implements OnInit {
 
   logout(e) {
     this.authService.logout().pipe(take(1)).subscribe();
-  }
-
-  login(e) {
-    this.authService.login().pipe(take(1)).subscribe();
   }
 }
 
